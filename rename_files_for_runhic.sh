@@ -1,15 +1,14 @@
 #!/bin/bash -l
-#SBATCH --job-name=Rename_QUO1018022
-#SBATCH --output=rename_QUO1018022.%j.txt
-#SBATCH --error=rename_QUO1018022.%j.err
-#SBATCH -p compute
-#SBATCH -c 1
-#SBATCH --mem-per-cpu=4
-#SBATCH -A lab_dovat
+
+# IMPORTANT: /mnt/labs/DovatLab_RW/... is only mounted on the LOGIN node,
+# not on compute nodes. Run this script directly on the login node with:
+#     bash rename_files_for_runhic.sh
+# Do NOT submit it with sbatch — the job will fail instantly because
+# compute nodes can't even chdir into raw_project_dir.
 
 # ---- EDIT THESE TWO PATHS ----
 raw_project_dir=/mnt/labs/DovatLab_RW/raw_data/2025/Yali_HiC/QUO1018022
-project_dir=/mnt/labs/DovatLab_RW/raw_data/2025/Yali_HiC/QUO1018022/results     # <- pick/confirm your gpfs working dir
+project_dir=/gpfs/Labs/Dovat/HiC_2025_QUO1018022     # <- must be on /gpfs so compute nodes can reach it later
 # -------------------------------
 
 # entries are "SubProject/SampleName" — SampleName includes the _S# suffix.
@@ -104,4 +103,3 @@ for entry in "${entries[@]}"; do
                 fi
         done
 done
-
